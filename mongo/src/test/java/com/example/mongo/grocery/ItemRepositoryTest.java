@@ -1,6 +1,5 @@
 package com.example.mongo.grocery;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,11 +20,6 @@ class ItemRepositoryTest {
 		itemRepository.save(new GroceryItem("1", "Milk", 1, "Dairy"));
 	}
 	
-	@AfterEach
-	void tearDown() {
-		itemRepository.deleteAll();
-	}
-	
 	@DisplayName("몽고 DB 데이터 저장 및 건수 확인 테스트")
 	@Test
 	void testCase1() {
@@ -39,5 +33,14 @@ class ItemRepositoryTest {
 		GroceryItem milk = itemRepository.findItemByName("Milk");
 		GroceryItem expected = new GroceryItem("1", "Milk", 1, "Dairy");
 		assertThat(milk).isEqualTo(expected);
+	}
+	
+	@DisplayName("몽고 DB 데이터 삭제 테스트")
+	@Test
+	void testCase3() {
+		itemRepository.deleteAll();
+		
+		long count = itemRepository.count();
+		assertThat(count).isZero();
 	}
 }

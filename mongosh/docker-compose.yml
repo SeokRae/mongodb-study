@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+    # docker run --name mongodb -v ./mongodb:/data/db -d -p 27017:27017 mongo
+    mongodb:
+        # 사용할 이미지
+        image: mongo
+        # 컨테이너 실행 시 재시작
+        restart: always
+        # 컨테이너 이름 설정
+        container_name: mongodb
+        # 접근 포트 설정 (컨테이너 외부:컨테이너 내부)
+        ports: ['27017:27017']
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: dba
+            MONGO_INITDB_ROOT_PASSWORD: 1234
+        # -v 옵션 (다렉토리 마운트 설정)
+        volumes:
+            - ./mongodb:/data/db
